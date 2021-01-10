@@ -1,5 +1,0 @@
-rootProject.name = 'Hart_Humane_V2'
-
-include 'client'
-include 'server'
-
