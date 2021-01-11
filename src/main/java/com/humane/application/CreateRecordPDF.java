@@ -1,4 +1,4 @@
-package com.example.application;
+package com.humane.application;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -16,18 +16,18 @@ import org.apache.pdfbox.util.Matrix;
 /**
  * Create a blank PDF and write the contents to a file.
  */
-public final class CreatePetPDF
+public final class CreateRecordPDF
 {
-    private CreatePetPDF()
+    private CreateRecordPDF()
     {        
     }
     
-    public static ByteArrayOutputStream createPDF(Pet pet) throws IOException
+    public static ByteArrayOutputStream createPDF(Animal animal) throws IOException
     {
 
         try (PDDocument doc = new PDDocument())
         {
-            String message = pet.getName();
+            String message = animal.getName();
             PDPage page = new PDPage();
             float fontSize = 36.0f;
             PDFont font = PDType1Font.HELVETICA_BOLD;

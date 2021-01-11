@@ -1,4 +1,4 @@
-package com.example.application.views.database;
+package com.humane.application.views.database;
 
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -7,30 +7,30 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.component.grid.Grid;
-import com.example.application.views.main.MainView;
+import com.humane.application.views.main.MainView;
 import com.vaadin.flow.router.RouteAlias;
-import com.example.application.PetService;
-import com.example.application.Pet;
-import com.example.application.PetForm;
+import com.humane.application.AnimalService;
+import com.humane.application.Animal;
+import com.humane.application.AnimalForm;
 
 @Route(value = "hello", layout = MainView.class)
 @PageTitle("Database")
-@CssImport("./styles/views/database/hello-world-view.css")
+@CssImport("./styles/views/database/database-view.css")
 @RouteAlias(value = "", layout = MainView.class)
-public class HelloWorldView extends VerticalLayout {
+public class DatabaseView extends VerticalLayout {
 
     /**
      *
      */
     private static final long serialVersionUID = 1L;
-    private PetService service = PetService.getInstance();
-    private Grid<Pet> grid = new Grid<>(Pet.class);
+    private AnimalService service = AnimalService.getInstance();
+    private Grid<Animal> grid = new Grid<>(Animal.class);
     private TextField filterText = new TextField();
-    private PetForm form = new PetForm(this);
+    private AnimalForm form = new AnimalForm(this);
 
 
-    public HelloWorldView() {
-        setId("hello-world-view");
+    public DatabaseView() {
+        setId("database-view");
         grid.setColumns("name", "status");
         add(filterText, grid, form);
         filterText.setPlaceholder("Filter by name...");
@@ -38,9 +38,9 @@ public class HelloWorldView extends VerticalLayout {
         filterText.setValueChangeMode(ValueChangeMode.EAGER);
         filterText.addValueChangeListener(e -> updateList());
         updateList();
-        form.setPet(null);
+        form.setAnimal(null);
         grid.asSingleSelect().addValueChangeListener(event ->
-            form.setPet(grid.asSingleSelect().getValue()));
+            form.setAnimal(grid.asSingleSelect().getValue()));
     }
 
     public void updateList() {

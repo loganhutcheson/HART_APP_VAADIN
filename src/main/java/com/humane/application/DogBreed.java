@@ -1,0 +1,5 @@
+package com.humane.application;
+
+public enum DogBreed {
+    LABRADOR, SHEPHERD, RETRIEVER, BULLDOG, POODLE, BEAGLE, ROTTWEILER, POINTER,  CORGI, TERRIER, BOXER, HUSKY
+}

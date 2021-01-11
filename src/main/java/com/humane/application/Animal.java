@@ -1,4 +1,4 @@
-package com.example.application;
+package com.humane.application;
 
 
 import java.io.Serializable;
@@ -9,7 +9,7 @@ import java.time.LocalDate;
  * application this could for example be a JPA entity.
  */
 @SuppressWarnings("serial")
-public class Pet implements Serializable, Cloneable {
+public class Animal implements Serializable, Cloneable {
 
     private Long id;
 
@@ -17,20 +17,24 @@ public class Pet implements Serializable, Cloneable {
 
     private LocalDate birthDate;
 
-    private PetStatus status;
+    private AnimalStatus status;
 
+    private AnimalType type;
 
-    public Pet() {
+    private DogBreed breed;
+
+    public Animal() {
 
 
     }
 
     
-    public Pet(Pet pet) {
-        this.id = pet.getId();
-        this.name = pet.getName();
-        this.birthDate = pet.getBirthDate();
-        this.status = pet.getStatus();
+    public Animal(Animal animal) {
+        this.id = animal.getId();
+        this.name = animal.getName();
+        this.birthDate = animal.getBirthDate();
+        this.status = animal.getStatus();
+        this.breed = animal.getBreed();
     }
 
     public Long getId() {
@@ -47,7 +51,7 @@ public class Pet implements Serializable, Cloneable {
      *
      * @return the value of status
      */
-    public PetStatus getStatus() {
+    public AnimalStatus getStatus() {
         return status;
     }
 
@@ -56,7 +60,7 @@ public class Pet implements Serializable, Cloneable {
      *
      * @param status new value of status
      */
-    public void setStatus(PetStatus status) {
+    public void setStatus(AnimalStatus status) {
         this.status = status;
     }
 
@@ -96,6 +100,23 @@ public class Pet implements Serializable, Cloneable {
         this.name = name;
     }
 
+
+    public AnimalType getType() {
+        return this.type;
+    }
+
+    public void setType(AnimalType type) {
+        this.type = type;
+    }
+
+    public DogBreed getBreed() {
+        return this.breed;
+    }
+
+    public void setBreed(DogBreed breed) {
+        this.breed = breed;
+    }
+
     public boolean isPersisted() {
         return id != null;
     }
@@ -109,8 +130,8 @@ public class Pet implements Serializable, Cloneable {
             return false;
         }
 
-        if (obj instanceof Pet && obj.getClass().equals(getClass())) {
-            return this.id.equals(((Pet) obj).id);
+        if (obj instanceof Animal && obj.getClass().equals(getClass())) {
+            return this.id.equals(((Animal) obj).id);
         }
 
         return false;
