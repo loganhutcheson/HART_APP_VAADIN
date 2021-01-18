@@ -169,7 +169,11 @@ public class AnimalService {
 				c.setName(name);
 				c.setStatus(AnimalStatus.values()[r.nextInt(3)%2]);
 				c.setBirthDate(LocalDate.now().minusDays(r.nextInt(365*10)));
-				c.setBreed(DogBreed.values()[r.nextInt(12)]);
+				c.setBreed(DogBreed.values()[r.nextInt(DogBreed.values().length)]);
+				c.setWeight(r.nextInt(100)+10);
+				c.setGender(Gender.values()[r.nextInt(2)]);
+				c.setColor(Color.values()[r.nextInt(Color.values().length)]);
+				c.setSpayed(Spayed.values()[r.nextInt(Spayed.values().length)]);
 				save(c);
 			}
 		}

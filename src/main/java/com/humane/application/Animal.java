@@ -23,6 +23,17 @@ public class Animal implements Serializable, Cloneable {
 
     private DogBreed breed;
 
+    private int weight;
+
+    private Gender gender;
+
+    private Color color;
+
+    private Spayed spayed;
+
+    
+
+
     public Animal() {
 
 
@@ -35,6 +46,10 @@ public class Animal implements Serializable, Cloneable {
         this.birthDate = animal.getBirthDate();
         this.status = animal.getStatus();
         this.breed = animal.getBreed();
+        this.weight = animal.getWeight();
+        this.gender = animal.getGender();
+        this.color = animal.getColor();
+        this.spayed = animal.getSpayed();
     }
 
     public Long getId() {
@@ -112,6 +127,41 @@ public class Animal implements Serializable, Cloneable {
     public DogBreed getBreed() {
         return this.breed;
     }
+
+    public int getWeight() {
+        return this.weight;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
+    public Gender getGender() {
+        return this.gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public Color getColor() {
+        return this.color;
+    }
+
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public Spayed getSpayed() {
+        return this.spayed;
+    }
+
+    public void setSpayed(Spayed spayed) {
+        this.spayed = spayed;
+    }
+
+
+
 
     public void setBreed(DogBreed breed) {
         this.breed = breed;

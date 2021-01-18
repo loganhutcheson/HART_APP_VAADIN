@@ -6,16 +6,23 @@ import java.io.IOException;
 import com.humane.application.views.database.DatabaseView;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.charts.model.VerticalAlign;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
+import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.HeaderRow;
+import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.html.NativeButton;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.notification.Notification.Position;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.data.converter.StringToIntegerConverter;
 import com.vaadin.flow.server.StreamResource;
 
 import org.vaadin.olli.FileDownloadWrapper;
@@ -30,6 +37,13 @@ public class AnimalForm extends FormLayout {
     private ComboBox<AnimalStatus> status = new ComboBox<>("Status");
     private DatePicker birthDate = new DatePicker("Birthdate");
     private ComboBox<DogBreed> breed = new ComboBox<>("Breed");
+    private TextField weight = new TextField("Weight");
+    private ComboBox<Gender> gender = new ComboBox<>("Gender");
+    private ComboBox<Color> color = new ComboBox<>("Color");
+    private ComboBox<Spayed> spayed = new ComboBox<>("Spayed/Neutered");
+    private Grid<VaccineRecord> vacGrid = new Grid<>(VaccineRecord.class);
+
+
     private Button save = new Button("Save");
     private Button delete = new Button("Delete");
     private Button download = new Button("Download");
@@ -44,12 +58,15 @@ public class AnimalForm extends FormLayout {
         this.databaseView = databaseView;
         status.setItems(AnimalStatus.values());
         breed.setItems(DogBreed.values());
+        gender.setItems(Gender.values());
+        color.setItems(Color.values());
+        spayed.setItems(Spayed.values());
+
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         save.addClickListener(event -> save());
         delete.addClickListener(event -> delete());
         
         HorizontalLayout buttons = new HorizontalLayout(save, delete, download);
-        // Notification Inside Button
         Span content = new Span("Do you want to download?");
         NativeButton buttonConfirm = new NativeButton("Yes");
         NativeButton buttonClose = new NativeButton("No");
@@ -59,7 +76,8 @@ public class AnimalForm extends FormLayout {
         notification.setPosition(Position.MIDDLE);
         download.addClickListener(event -> download());
         download.addClickListener(event -> notification.open());
-        // Wrapper that sends pdf file
+
+        // File Download Wrapper Initialization
         try {
             byte[] animalPdf = CreateRecordPDF.createPDF(new Animal()).toByteArray();
             buttonWrapper = new FileDownloadWrapper(
@@ -71,8 +89,16 @@ public class AnimalForm extends FormLayout {
         } catch(IOException e) {
             e.printStackTrace();
         }
-        add(name, status, birthDate, breed, buttons);
+        // Label for Vaccine records
+        Label vacLabel = new Label("Vaccine Records");
+        VerticalLayout vacComp = new VerticalLayout(vacLabel, vacGrid);
+        add(name, status, birthDate, breed, weight, gender, color, spayed, vacComp, buttons);
+        binder.forField(weight)
+        .withConverter(new StringToIntegerConverter("Please enter number"))
+        .bind(Animal::getWeight, Animal::setWeight);
+
         binder.bindInstanceFields(this);
+
     }
 
     public void setAnimal(Animal animal) {
